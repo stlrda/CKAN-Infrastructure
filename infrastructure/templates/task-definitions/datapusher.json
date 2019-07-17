@@ -1,0 +1,48 @@
+[
+  {
+    "dnsSearchDomains": null,
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "secretOptions": null,
+      "options": {
+        "awslogs-group": "/ecs/datapusher",
+        "awslogs-region": "us-east-1",
+        "awslogs-stream-prefix": "ecs"
+      }
+    },
+    "entryPoint": null,
+    "portMappings": [],
+    "command": null,
+    "linuxParameters": null,
+    "cpu": 10,
+    "environment": [],
+    "resourceRequirements": null,
+    "ulimits": null,
+    "dnsServers": null,
+    "mountPoints": [],
+    "workingDirectory": null,
+    "secrets": null,
+    "dockerSecurityOptions": null,
+    "memory": null,
+    "memoryReservation": 128,
+    "volumesFrom": [],
+    "stopTimeout": null,
+    "image": "clementmouchet/datapusher:latest",
+    "startTimeout": null,
+    "dependsOn": null,
+    "disableNetworking": null,
+    "interactive": null,
+    "healthCheck": null,
+    "essential": true,
+    "links": null,
+    "hostname": null,
+    "extraHosts": null,
+    "pseudoTerminal": null,
+    "user": null,
+    "readonlyRootFilesystem": null,
+    "dockerLabels": null,
+    "systemControls": null,
+    "privileged": null,
+    "name": "redis"
+  }
+]

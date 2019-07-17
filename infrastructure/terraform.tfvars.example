@@ -1,0 +1,11 @@
+region = "us-east-1"
+vpc_name = "stl-rda-ckan"
+//at least three vpc_availability_zones
+vpc_availability_zones = [
+  "us-east-1a",
+  "us-east-1b",
+  "us-east-1c"
+]
+hosted_zone = "XXXXXXXXXXXXXX"
+rds_password = "4l318dbNgZ3Zjr^tIGmm@eWdddxrxOV%U3@e8Iqq4W3AG2&ZVVpr7H$Xrib$kha8"
+admin_ip = "1.2.3.4"

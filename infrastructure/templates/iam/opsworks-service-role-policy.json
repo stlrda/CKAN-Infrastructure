@@ -1,0 +1,24 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "cloudwatch:GetMetricStatistics",
+        "ec2:*",
+        "elasticloadbalancing:DescribeInstanceHealth",
+        "elasticloadbalancing:DescribeLoadBalancers",
+        "iam:GetRolePolicy",
+        "iam:ListInstanceProfiles",
+        "iam:ListRoles",
+        "iam:ListUsers",
+        "iam:PassRole",
+        "opsworks:*",
+        "rds:*"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}

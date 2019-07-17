@@ -1,0 +1,111 @@
+[
+  {
+    "dnsSearchDomains": null,
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "secretOptions": null,
+      "options": {
+        "awslogs-group": "/ecs/ckan",
+        "awslogs-region": "us-east-1",
+        "awslogs-stream-prefix": "ecs"
+      }
+    },
+    "entryPoint": null,
+    "portMappings": [
+      {
+        "protocol": "tcp",
+        "containerPort": 5000,
+        "hostPort": 5000
+      }
+    ],
+    "command": null,
+    "linuxParameters": null,
+    "cpu": 10,
+    "environment": [
+      {
+        "name": "CKAN_SQLALCHEMY_URL",
+        "value": "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_URL}/ckan"
+      },
+      {
+        "name": "CKAN_DATASTORE_WRITE_URL",
+        "value": "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_URL}/datastore"
+      },
+      {
+        "name": "CKAN_DATASTORE_READ_URL",
+        "value": "postgresql://${DATASTORE_READONLY_USER}:${DATASTORE_READONLY_PASSWORD}@${DATABASE_URL}/datastore"
+      },
+      {
+        "name": "CKAN_SOLR_URL",
+        "value": "http://${SOLR_SERVICE_DISCOVERY_ENDPOINT}:8983/solr/ckan"
+      },
+      {
+        "name": "CKAN_REDIS_URL",
+        "value": "redis://${ELASTICACHE_ENDPOINT}:6379/1"
+      },
+      {
+        "name": "CKAN_DATAPUSHER_URL",
+        "value": "http://${DATAPUSHER_SERVICE_DISCOVERY_ENDPOINT}:8800"
+      },
+      {
+        "name": "CKAN_SITE_URL",
+        "value": "${CKAN_SITE_URL}"
+      },
+      {
+        "name": "CKAN_MAX_UPLOAD_SIZE_MB",
+        "value": "${CKAN_MAX_UPLOAD_SIZE_MB}"
+      },
+      {
+        "name": "POSTGRES_PASSWORD",
+        "value": "${POSTGRES_PASSWORD}"
+      },
+      {
+        "name": "DS_RO_PASS",
+        "value": "${DATASTORE_READONLY_PASSWORD}"
+      }
+    ],
+    "resourceRequirements": null,
+    "ulimits": null,
+    "dnsServers": null,
+    "mountPoints": [
+      {
+        "readOnly": false,
+        "containerPath": "/etc/ckan",
+        "sourceVolume": "efs-ckan-config"
+      },
+      {
+        "readOnly": false,
+        "containerPath": "/usr/lib/ckan",
+        "sourceVolume": "efs-ckan-home"
+      },
+      {
+        "readOnly": false,
+        "containerPath": "/var/lib/ckan",
+        "sourceVolume": "efs-ckan-storage"
+      }
+    ],
+    "workingDirectory": null,
+    "secrets": null,
+    "dockerSecurityOptions": null,
+    "memory": 128,
+    "memoryReservation": null,
+    "volumesFrom": [],
+    "stopTimeout": null,
+    "image": "ckan/ckan",
+    "startTimeout": null,
+    "dependsOn": null,
+    "disableNetworking": null,
+    "interactive": null,
+    "healthCheck": null,
+    "essential": true,
+    "links": null,
+    "hostname": null,
+    "extraHosts": null,
+    "pseudoTerminal": null,
+    "user": null,
+    "readonlyRootFilesystem": null,
+    "dockerLabels": null,
+    "systemControls": null,
+    "privileged": null,
+    "name": "ckan"
+  }
+]

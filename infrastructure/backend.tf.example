@@ -1,0 +1,12 @@
+# This assumes we have a bucket created called mybucket.
+# The Terraform state is written to the key path/to/my/key.
+# save this file without the ".backup" extension
+
+terraform {
+  backend "s3" {
+    bucket = "mybucket"
+    key    = "path/to/my/key"
+    region = "us-east-1"
+    dynamodb_table = "your_dynambodb_state_table"
+  }
+}
