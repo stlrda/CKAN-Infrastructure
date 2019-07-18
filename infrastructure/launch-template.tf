@@ -41,7 +41,8 @@ resource "aws_launch_template" "ecs" {
   network_interfaces {
     security_groups = [
       "${aws_security_group.ecs.id}",
-      "${aws_security_group.administrative.id}"
+      "${aws_security_group.administrative.id}",
+      "${aws_security_group.all-outbound.id}"
     ]
     delete_on_termination       = true
     associate_public_ip_address = true

@@ -11,7 +11,13 @@
       }
     },
     "entryPoint": null,
-    "portMappings": [],
+    "portMappings": [
+      {
+        "protocol": "tcp",
+        "containerPort": 8800,
+        "hostPort": 0
+      }
+    ],
     "command": null,
     "linuxParameters": null,
     "cpu": 10,
@@ -27,7 +33,7 @@
     "memoryReservation": 128,
     "volumesFrom": [],
     "stopTimeout": null,
-    "image": "clementmouchet/datapusher:latest",
+    "image": "regionaldatalliance/datapusher:v-0.0.15c",
     "startTimeout": null,
     "dependsOn": null,
     "disableNetworking": null,
@@ -43,6 +49,6 @@
     "dockerLabels": null,
     "systemControls": null,
     "privileged": null,
-    "name": "redis"
+    "name": "datapusher"
   }
 ]

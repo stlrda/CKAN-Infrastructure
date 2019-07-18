@@ -53,8 +53,10 @@ resource "aws_ecs_service" "datapusher" {
   cluster         = "${module.ecs.this_ecs_cluster_name}"
   desired_count   = 1
 
-  service_registries {
-    registry_arn = "${aws_service_discovery_service.datapusher.arn}"
+  load_balancer {
+    target_group_arn = "${aws_alb_target_group.datapusher-http.id}"
+    container_name   = "datapusher"
+    container_port   = "8800"
   }
 }
 
@@ -83,19 +85,18 @@ resource "aws_ecs_task_definition" "ckan" {
   family                = "ckan"
   container_definitions = data.template_file.container-definition-ckan.rendered
 
-
-  volume {
-    name      = "efs-ckan-config"
-    host_path = "/mnt/efs/ckan/config"
-  }
-  volume {
-    name      = "efs-ckan-home"
-    host_path = "/mnt/efs/ckan/home"
-  }
   volume {
     name      = "efs-ckan-storage"
     host_path = "/mnt/efs/ckan/storage"
   }
+
+}
+
+resource "aws_ecs_task_definition" "datapusher" {
+  family                = "datapusher"
+  container_definitions = "${file("templates/task-definitions/datapusher.json")}"
+
+  depends_on = [aws_cloudwatch_log_group.datapusher]
 
 }
 
@@ -112,24 +113,10 @@ data "template_file" "container-definition-ckan" {
     DATASTORE_READONLY_PASSWORD = aws_db_instance.database.password
     ELASTICACHE_ENDPOINT        = aws_elasticache_cluster.redis.cache_nodes.0.address
     SOLR_ENDPOINT               = "${aws_alb.application-load-balancer.dns_name}"
-    DATAPUSHER_ENDPOINT         = "${aws_service_discovery_service.datapusher.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
-
+    DATAPUSHER_ENDPOINT         = "localhost"
   }
 
   depends_on = [aws_cloudwatch_log_group.ckan]
-
-}
-
-resource "aws_ecs_task_definition" "datapusher" {
-  family                = "datapusher"
-  container_definitions = "${file("templates/task-definitions/datapusher.json")}"
-
-  volume {
-    name      = "efs-datapusher"
-    host_path = "/mnt/efs/datapusher"
-  }
-
-  depends_on = [aws_cloudwatch_log_group.datapusher]
 
 }
 

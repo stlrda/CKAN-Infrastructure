@@ -83,6 +83,14 @@
         "value": "http://${DATAPUSHER_ENDPOINT}:8800"
       },
       {
+        "name": "TEST_CKAN_SOLR_URL",
+        "value": "http://${SOLR_ENDPOINT}:8983/solr/ckan"
+      },
+      {
+        "name": "TEST_CKAN_REDIS_URL",
+        "value": "redis://${ELASTICACHE_ENDPOINT}:6379/1"
+      },
+      {
         "name": "CKAN__STORAGE_PATH",
         "value": "/var/lib/ckan"
       },
@@ -133,16 +141,6 @@
     "mountPoints": [
       {
         "readOnly": false,
-        "containerPath": "/etc/ckan",
-        "sourceVolume": "efs-ckan-config"
-      },
-      {
-        "readOnly": false,
-        "containerPath": "/usr/lib/ckan",
-        "sourceVolume": "efs-ckan-home"
-      },
-      {
-        "readOnly": false,
         "containerPath": "/var/lib/ckan",
         "sourceVolume": "efs-ckan-storage"
       }
@@ -154,7 +152,7 @@
     "memoryReservation": 128,
     "volumesFrom": [],
     "stopTimeout": null,
-    "image": "openknowledge/ckan-base:2.8",
+    "image": "regionaldatalliance/ckan:version-2.8d",
     "startTimeout": null,
     "dependsOn": null,
     "disableNetworking": null,
