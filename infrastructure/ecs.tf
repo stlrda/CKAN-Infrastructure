@@ -35,6 +35,18 @@ resource "aws_ecs_service" "ckan" {
 
   health_check_grace_period_seconds = 600
 
+  network_configuration {
+    subnets         = module.vpc.private_subnets
+    security_groups = [
+      "${aws_security_group.ckan.id}",
+      "${aws_security_group.all-outbound.id}"
+    ]
+  }
+
+  service_registries {
+    registry_arn = "${aws_service_discovery_service.ckan.arn}"
+  }
+
   depends_on = [
     "aws_alb_listener.ckan-http",
     "aws_alb_listener.ckan-https",
@@ -45,6 +57,7 @@ resource "aws_ecs_service" "ckan" {
   lifecycle {
     ignore_changes = ["desired_count"]
   }
+
 }
 
 resource "aws_ecs_service" "datapusher" {
@@ -58,6 +71,19 @@ resource "aws_ecs_service" "datapusher" {
     container_name   = "datapusher"
     container_port   = "8800"
   }
+
+  service_registries {
+    registry_arn = "${aws_service_discovery_service.datapusher.arn}"
+  }
+
+  network_configuration {
+    subnets         = module.vpc.private_subnets
+    security_groups = [
+      "${aws_security_group.datapusher.id}",
+      "${aws_security_group.all-outbound.id}"
+    ]
+  }
+
 }
 
 resource "aws_ecs_service" "solr" {
@@ -70,6 +96,18 @@ resource "aws_ecs_service" "solr" {
     target_group_arn = "${aws_alb_target_group.solr-http.id}"
     container_name   = "solr"
     container_port   = "8983"
+  }
+
+  service_registries {
+    registry_arn = "${aws_service_discovery_service.solr.arn}"
+  }
+
+  network_configuration {
+    subnets         = module.vpc.private_subnets
+    security_groups = [
+      "${aws_security_group.solr.id}",
+      "${aws_security_group.all-outbound.id}"
+    ]
   }
 
   depends_on = [
@@ -90,11 +128,17 @@ resource "aws_ecs_task_definition" "ckan" {
     host_path = "/mnt/efs/ckan/storage"
   }
 
+  network_mode = "awsvpc"
+
+  depends_on = [aws_cloudwatch_log_group.ckan]
+
 }
 
 resource "aws_ecs_task_definition" "datapusher" {
   family                = "datapusher"
   container_definitions = "${file("templates/task-definitions/datapusher.json")}"
+
+  network_mode = "awsvpc"
 
   depends_on = [aws_cloudwatch_log_group.datapusher]
 
@@ -112,8 +156,8 @@ data "template_file" "container-definition-ckan" {
     DATASTORE_READONLY_USER     = aws_db_instance.database.username
     DATASTORE_READONLY_PASSWORD = aws_db_instance.database.password
     ELASTICACHE_ENDPOINT        = aws_elasticache_cluster.redis.cache_nodes.0.address
-    SOLR_ENDPOINT               = "${aws_alb.application-load-balancer.dns_name}"
-    DATAPUSHER_ENDPOINT         = "localhost"
+    SOLR_ENDPOINT               = "${aws_service_discovery_service.solr.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
+    DATAPUSHER_ENDPOINT         = "${aws_service_discovery_service.datapusher.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
   }
 
   depends_on = [aws_cloudwatch_log_group.ckan]
@@ -128,6 +172,8 @@ resource "aws_ecs_task_definition" "solr" {
     name      = "efs-solr"
     host_path = "/mnt/efs/solr"
   }
+
+  network_mode = "awsvpc"
 
   depends_on = [aws_cloudwatch_log_group.solr]
 

@@ -15,7 +15,7 @@
       {
         "protocol": "tcp",
         "containerPort": 5000,
-        "hostPort": 0
+        "hostPort": 5000
       }
     ],
     "command": null,

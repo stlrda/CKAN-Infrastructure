@@ -42,7 +42,7 @@ resource "aws_alb_target_group" "ckan-http" {
   name = "ckan"
   protocol = "HTTP"
   vpc_id = "${module.vpc.vpc_id}"
-  target_type = "instance"
+  target_type = "ip"
   port = 5000
   deregistration_delay = 10
   health_check {
@@ -70,7 +70,7 @@ resource "aws_alb_target_group" "solr-http" {
   name = "solr"
   protocol = "HTTP"
   vpc_id = "${module.vpc.vpc_id}"
-  target_type = "instance"
+  target_type = "ip"
   port = 8983
   deregistration_delay = 10
   health_check {
@@ -97,7 +97,7 @@ resource "aws_alb_target_group" "datapusher-http" {
   name = "datapusher"
   protocol = "HTTP"
   vpc_id = "${module.vpc.vpc_id}"
-  target_type = "instance"
+  target_type = "ip"
   port = 8800
   deregistration_delay = 10
   health_check {

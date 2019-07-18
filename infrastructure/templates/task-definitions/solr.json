@@ -13,7 +13,7 @@
     "entryPoint": null,
     "portMappings": [
       {
-        "hostPort": 0,
+        "hostPort": 8983,
         "protocol": "tcp",
         "containerPort": 8983
       }
