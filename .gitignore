@@ -42,3 +42,4 @@ backend.tf
 .idea/vcs.xml
 .idea/workspace.xml
 CKAN-Infrastructure.iml
+.DS_Store
