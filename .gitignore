@@ -44,3 +44,4 @@ backend.tf
 CKAN-Infrastructure.iml
 .DS_Store
 .DS_Store
+.idea/aws.xml

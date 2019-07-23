@@ -1,5 +1,4 @@
-Instructions for setting up ckan infrastructure on AWS
-
+Instructions for setting up CKAN infrastructure on AWS
 
 ###### Setup terraform binary
 
@@ -8,10 +7,8 @@ Instructions for setting up ckan infrastructure on AWS
 1. Install terraform here: 
 https://learn.hashicorp.com/terraform/getting-started/install.html
 
-quick reference on mac with homebrew: 
+quick reference on Mac with homebrew: 
 `brew install terraform`
-
-
 
 ###### Setup and Use
 
@@ -22,9 +19,9 @@ quick reference on mac with homebrew:
 
 ###### Determine the Public Facing URL
 1. Assume that your domain is hosted in route53
-1. get the Hosted Zone ID such as `A5GJ576DARR2YZ`
-1. update the hosted_zone in your local `terraform.tfvars` 
-1. this will create a DNS record to generate a SSL Certificate for ckan
+1. Get the Hosted Zone ID such as `A5GJ576DARR2YZ`
+1. Update the hosted_zone in your local `terraform.tfvars` 
+1. This will create a DNS record to generate a SSL Certificate for CKAN
 
 ###### Optional: Remote State
 
@@ -44,5 +41,5 @@ quick reference on mac with homebrew:
 
 1. import some IAM users in Opsworks
 1. Add public SSH keys for users that will have SSH access
-1. grant access to the instances in Opsworks for the instnaces
+1. grant access to the instances in Opsworks for the instances
 1. get ssh instructions from Opsworks console page
