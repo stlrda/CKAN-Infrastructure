@@ -37,11 +37,6 @@ backend.tf
 /infrastructure/terraform.tfstate.backup
 /infrastructure/terraform.tfstate
 /infrastructure/templates/lambda/deregister-ec2-from-opsworks.zip
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
+.idea
 CKAN-Infrastructure.iml
 .DS_Store
-.DS_Store
-.idea/aws.xml
