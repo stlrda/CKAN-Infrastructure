@@ -36,7 +36,7 @@ resource "aws_launch_template" "ecs" {
   image_id                             = data.aws_ami.amazon_linux_ecs.id
   user_data                            = "${base64encode(data.template_file.user_data.rendered)}"
   instance_initiated_shutdown_behavior = "terminate"
-  instance_type                        = "t3.small"
+  instance_type                        = "t3.nano"
 
   network_interfaces {
     security_groups = [

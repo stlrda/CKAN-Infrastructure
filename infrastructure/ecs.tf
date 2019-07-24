@@ -33,7 +33,7 @@ resource "aws_ecs_service" "ckan" {
     container_port   = "5000"
   }
 
-  health_check_grace_period_seconds = 600
+  health_check_grace_period_seconds = 60
 
   network_configuration {
     subnets         = module.vpc.private_subnets
@@ -92,6 +92,8 @@ resource "aws_ecs_service" "solr" {
   cluster         = "${module.ecs.this_ecs_cluster_name}"
   desired_count   = 1
 
+  health_check_grace_period_seconds = 30
+
   load_balancer {
     target_group_arn = "${aws_alb_target_group.solr-http.id}"
     container_name   = "solr"
@@ -128,7 +130,7 @@ resource "aws_ecs_task_definition" "ckan" {
     host_path = "/mnt/efs/ckan/storage"
   }
 
-  network_mode = "awsvpc"
+//  network_mode = "awsvpc"
 
   depends_on = [aws_cloudwatch_log_group.ckan]
 
@@ -138,7 +140,7 @@ resource "aws_ecs_task_definition" "datapusher" {
   family                = "datapusher"
   container_definitions = "${file("templates/task-definitions/datapusher.json")}"
 
-  network_mode = "awsvpc"
+//  network_mode = "awsvpc"
 
   depends_on = [aws_cloudwatch_log_group.datapusher]
 
@@ -173,7 +175,7 @@ resource "aws_ecs_task_definition" "solr" {
     host_path = "/mnt/efs/solr"
   }
 
-  network_mode = "awsvpc"
+//  network_mode = "awsvpc"
 
   depends_on = [aws_cloudwatch_log_group.solr]
 

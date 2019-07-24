@@ -193,28 +193,28 @@ resource "aws_security_group_rule" "ckan-to-solr" {
   description = "ckan-to-solr"
   from_port = 0
   protocol = "-1"
-  security_group_id = "${aws_security_group.ckan.id}"
+  security_group_id = "${aws_security_group.solr.id}"
   to_port = 0
   type = "ingress"
-  source_security_group_id = "${aws_security_group.solr.id}"
+  source_security_group_id = "${aws_security_group.ckan.id}"
 }
 
 resource "aws_security_group_rule" "elb-to-solr" {
   description = "elb-to-solr"
   from_port = 0
   protocol = "-1"
-  security_group_id = "${aws_security_group.elb.id}"
+  security_group_id = "${aws_security_group.solr.id}"
   to_port = 0
   type = "ingress"
-  source_security_group_id = "${aws_security_group.solr.id}"
+  source_security_group_id = "${aws_security_group.elb.id}"
 }
 
 resource "aws_security_group_rule" "ecs-to-solr" {
   description = "ecs-to-solr"
   from_port = 0
   protocol = "-1"
-  security_group_id = "${aws_security_group.ecs.id}"
+  security_group_id = "${aws_security_group.solr.id}"
   to_port = 0
   type = "ingress"
-  source_security_group_id = "${aws_security_group.solr.id}"
+  source_security_group_id = "${aws_security_group.ecs.id}"
 }

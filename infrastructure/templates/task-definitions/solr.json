@@ -38,7 +38,16 @@
     "dependsOn": null,
     "disableNetworking": null,
     "interactive": null,
-    "healthCheck": null,
+    "healthCheck": {
+      "retries": 3,
+      "command": [
+        "\"CMD-SHELL\"",
+        "\"curl -f \"\"\"http://localhost:8983/solr/ckan/select/?q=%2A%3A%2A&rows=1&wt=json\"\"\" || exit 1\""
+      ],
+      "timeout": 5,
+      "interval": 30,
+      "startPeriod": null
+    },
     "essential": true,
     "links": null,
     "hostname": null,

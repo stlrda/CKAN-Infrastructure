@@ -5,8 +5,8 @@ resource "aws_placement_group" "ecs-spread-placement-group" {
 
 resource "aws_autoscaling_group" "ecs" {
   name                      = local.name
-  max_size                  = 1
-  min_size                  = 1
+  max_size                  = 3
+  min_size                  = 3
   health_check_grace_period = 300
   health_check_type         = "EC2"
   desired_capacity          = 1

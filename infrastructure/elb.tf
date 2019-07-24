@@ -90,7 +90,7 @@ resource "aws_alb_listener" "datapusher-http" {
     type             = "forward"
   }
 
-  depends_on = [aws_alb_target_group.solr-http]
+  depends_on = [aws_alb_target_group.datapusher-http]
 }
 
 resource "aws_alb_target_group" "datapusher-http" {
