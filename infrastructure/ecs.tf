@@ -130,7 +130,7 @@ resource "aws_ecs_task_definition" "ckan" {
     host_path = "/mnt/efs/ckan/storage"
   }
 
-//  network_mode = "awsvpc"
+  network_mode = "awsvpc"
 
   depends_on = [aws_cloudwatch_log_group.ckan]
 
@@ -140,7 +140,7 @@ resource "aws_ecs_task_definition" "datapusher" {
   family                = "datapusher"
   container_definitions = "${file("templates/task-definitions/datapusher.json")}"
 
-//  network_mode = "awsvpc"
+  network_mode = "awsvpc"
 
   depends_on = [aws_cloudwatch_log_group.datapusher]
 
@@ -175,7 +175,7 @@ resource "aws_ecs_task_definition" "solr" {
     host_path = "/mnt/efs/solr"
   }
 
-//  network_mode = "awsvpc"
+  network_mode = "awsvpc"
 
   depends_on = [aws_cloudwatch_log_group.solr]
 
