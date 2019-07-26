@@ -28,7 +28,7 @@
       },
       {
         "name": "DATASTORE_READONLY_PASSWORD",
-        "value": "${POSTGRES_PASSWORD}"
+        "value": "${DATASTORE_READONLY_PASSWORD}"
       },
       {
         "name": "CKAN_SITE_ID",

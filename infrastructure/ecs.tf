@@ -155,8 +155,8 @@ data "template_file" "container-definition-ckan" {
     CKAN_MAX_UPLOAD_SIZE_MB     = 50
     POSTGRES_USER               = aws_db_instance.database.username
     POSTGRES_PASSWORD           = aws_db_instance.database.password
-    DATASTORE_READONLY_USER     = aws_db_instance.database.username
-    DATASTORE_READONLY_PASSWORD = aws_db_instance.database.password
+    DATASTORE_READONLY_USER     = "datastore_ro"
+    DATASTORE_READONLY_PASSWORD = "${var.datastore_readonly_password}"
     ELASTICACHE_ENDPOINT        = aws_elasticache_cluster.redis.cache_nodes.0.address
     SOLR_ENDPOINT               = "${aws_service_discovery_service.solr.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
     DATAPUSHER_ENDPOINT         = "${aws_service_discovery_service.datapusher.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
