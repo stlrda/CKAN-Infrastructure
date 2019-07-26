@@ -2,8 +2,6 @@
 # Data sources to get VPC, subnets and security group details
 ##############################################################
 
-variable "rds_password" {}
-
 locals {
   engine_name = "postgres"
   username = "ckan"

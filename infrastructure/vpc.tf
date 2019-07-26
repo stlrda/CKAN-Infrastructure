@@ -4,10 +4,6 @@
 A terraform module to create a vpc
 */
 
-variable "vpc_name" {}
-variable "region" {}
-variable "vpc_availability_zones" {}
-
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 

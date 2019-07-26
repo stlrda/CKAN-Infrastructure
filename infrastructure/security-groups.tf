@@ -1,5 +1,3 @@
-variable "admin_ip" {}
-
 //---- elb
 
 resource "aws_security_group" "elb" {
