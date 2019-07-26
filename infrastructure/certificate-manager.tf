@@ -1,3 +1,6 @@
+//WARNING: repeated apply/destroys can easily hit AWS's annual certificate creation limit.
+//A support ticket can be opened to increase that limit.
+
 resource "aws_acm_certificate" "certificate" {
   domain_name       = aws_route53_record.zone_apex.fqdn
   validation_method = "DNS"

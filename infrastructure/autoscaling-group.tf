@@ -1,8 +1,11 @@
+//The auto-scaling group determins how many containers are running behind the load balancer
+
 resource "aws_placement_group" "ecs-spread-placement-group" {
   name     = "spread-placement-group"
   strategy = "spread"
 }
 
+//@michael, please explain need for min_size=3 here
 resource "aws_autoscaling_group" "ecs" {
   name                      = local.name
   max_size                  = 3

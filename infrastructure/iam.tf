@@ -1,3 +1,5 @@
+//IAM controls what each AWS instance and service can communicate with.
+
 resource "aws_iam_role" "instance-role-for-ecs" {
   name = "instance-role-for-ecs"
 

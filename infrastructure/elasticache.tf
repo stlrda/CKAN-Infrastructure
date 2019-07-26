@@ -1,3 +1,5 @@
+//@michael, what is elasticache being use for/what is it storing?
+
 resource "aws_elasticache_parameter_group" "redis" {
   name = "redis"
   family = "redis5.0"

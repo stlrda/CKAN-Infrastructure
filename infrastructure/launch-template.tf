@@ -1,3 +1,6 @@
+//@michael, what is this file doing?
+
+
 data "template_file" "user_data" {
   template = file("${path.module}/templates/userdata.sh")
 

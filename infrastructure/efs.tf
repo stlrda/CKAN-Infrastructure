@@ -1,3 +1,5 @@
+//@Michael, what is EFS being used to store?
+
 resource "aws_efs_file_system" "efs" {
 }
 

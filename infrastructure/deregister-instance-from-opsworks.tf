@@ -1,3 +1,6 @@
+//There is a known bug that results in an opworks instance not properly deregistering upon Terraform Destroy.
+//Manually deregistering that instance will allow Terraform Destroy to be run successfully
+
 data "archive_file" "deregister-ec2-from-opsworks" {
   type        = "zip"
   source_file = "./templates/lambda/deregister-ec2-from-opsworks.py"

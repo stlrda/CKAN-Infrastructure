@@ -1,3 +1,6 @@
+//The ELB directs traffic to docker containers of the appropriate type
+//It also evenly distributes load among extanct containers of a given type
+
 resource "aws_alb" "application-load-balancer" {
   name            = "ckan"
   security_groups = [
