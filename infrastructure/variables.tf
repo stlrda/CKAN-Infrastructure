@@ -19,7 +19,7 @@ variable "hosted_zone" {}
 variable "rds_password" {}
 
 variable "datastore_readonly_password" {
-  default = datastore_ro_password
+  default = "datastore_ro_password"
 }
 
 variable "admin_ip" {}
