@@ -33,7 +33,7 @@ resource "aws_ecs_service" "ckan" {
     container_port   = "5000"
   }
 
-  health_check_grace_period_seconds = 60
+  health_check_grace_period_seconds = 600
 
   network_configuration {
     subnets         = module.vpc.private_subnets
