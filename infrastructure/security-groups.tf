@@ -71,6 +71,26 @@ resource "aws_security_group" "ecs" {
   vpc_id      = module.vpc.vpc_id
 }
 
+resource "aws_security_group_rule" "ecs-to-ecs-ingress" {
+  description = "ecs-to-ecs"
+  from_port = 0
+  protocol = "-1"
+  security_group_id = "${aws_security_group.ecs.id}"
+  to_port = 0
+  type = "ingress"
+  source_security_group_id = "${aws_security_group.ecs.id}"
+}
+
+resource "aws_security_group_rule" "ecs-to-ecs-egress" {
+  description = "ecs-to-ecs"
+  from_port = 0
+  protocol = "-1"
+  security_group_id = "${aws_security_group.ecs.id}"
+  to_port = 0
+  type = "egress"
+  source_security_group_id = "${aws_security_group.ecs.id}"
+}
+
 //---- database
 
 resource "aws_security_group" "database" {
@@ -153,6 +173,26 @@ resource "aws_security_group_rule" "elb-to-ckan" {
   source_security_group_id = "${aws_security_group.elb.id}"
 }
 
+resource "aws_security_group_rule" "ckan-to-ckan-ingress" {
+  description = "ckan-to-ckan"
+  from_port = 0
+  protocol = "-1"
+  security_group_id = "${aws_security_group.ckan.id}"
+  to_port = 0
+  type = "ingress"
+  source_security_group_id = "${aws_security_group.ckan.id}"
+}
+
+resource "aws_security_group_rule" "ckan-to-ckan-egress" {
+  description = "ckan-to-ckan"
+  from_port = 0
+  protocol = "-1"
+  security_group_id = "${aws_security_group.ckan.id}"
+  to_port = 0
+  type = "egress"
+  source_security_group_id = "${aws_security_group.ckan.id}"
+}
+
 //---- datapusher
 
 resource "aws_security_group" "datapusher" {
@@ -217,4 +257,24 @@ resource "aws_security_group_rule" "ecs-to-solr" {
   to_port = 0
   type = "ingress"
   source_security_group_id = "${aws_security_group.ecs.id}"
+}
+
+resource "aws_security_group_rule" "solr-to-solr-ingress" {
+  description = "solr-to-solr"
+  from_port = 0
+  protocol = "-1"
+  security_group_id = "${aws_security_group.solr.id}"
+  to_port = 0
+  type = "ingress"
+  source_security_group_id = "${aws_security_group.solr.id}"
+}
+
+resource "aws_security_group_rule" "solr-to-solr-egress" {
+  description = "solr-to-solr"
+  from_port = 0
+  protocol = "-1"
+  security_group_id = "${aws_security_group.solr.id}"
+  to_port = 0
+  type = "egress"
+  source_security_group_id = "${aws_security_group.solr.id}"
 }

@@ -19,7 +19,7 @@ resource "aws_service_discovery_service" "ckan" {
   }
 
   health_check_custom_config {
-    failure_threshold = 1
+    failure_threshold = 10
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_service_discovery_service" "solr" {
   }
 
   health_check_custom_config {
-    failure_threshold = 1
+    failure_threshold = 10
   }
 }
 
@@ -57,6 +57,6 @@ resource "aws_service_discovery_service" "datapusher" {
   }
 
   health_check_custom_config {
-    failure_threshold = 1
+    failure_threshold = 10
   }
 }
