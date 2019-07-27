@@ -26,6 +26,8 @@ resource "aws_ecs_service" "ckan" {
   task_definition = "${aws_ecs_task_definition.ckan.id}"
   cluster         = "${module.ecs.this_ecs_cluster_name}"
   desired_count   = 1
+  deployment_minimum_healthy_percent = 0
+  deployment_maximum_percent = 200
 
   load_balancer {
     target_group_arn = "${aws_alb_target_group.ckan-http.id}"
