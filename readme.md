@@ -21,12 +21,21 @@ quick reference on Mac with homebrew:
 1. Update the hosted_zone in your local `terraform.tfvars` 
 1. This will create a DNS record to generate a SSL Certificate for CKAN
 
+###### One-Time Non-Terraform Setup for Opsworks SSH Access
+Opsworks manages public SSH keys on instances for access by your team. Instances in the autoscale group are added to opsworks.
+
+1. Import IAM users you want to give access to in Opsworks (https://docs.aws.amazon.com/opsworks/latest/userguide/opsworks-security-users-manage-import.html)
+1. If you don't already have a public/private keypair set up, create one using this guide. Adding the SSH key to the agent is optional. https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key
+1. Copy and paste the contents of public SSH key (NOT the key.PEM file) to the opsworks user (https://docs.aws.amazon.com/opsworks/latest/userguide/security-settingsshkey.html)
+1. Grant access to the instances in Opsworks for the instances
+1. Get ssh instructions from Opsworks web console page
+
 ###### Required One-Time Non-Terraform Setup for EFS
 EFS (Elastic File System) is used to store files that are uploaded to CKAN and any site configuration changes. The directory is mounted on all ECS Cluster member hosts at `/mnt/efs/`. Hosts reading contents of the directory are pointed to a network volume shared among all hosts. 
 
 The mounted EFS directory must be owned by user/group id `92` - which is ckan in the container. Without this, the application inside the container cannot write to the mounted EFS volume on the host.
 
-SSH in to any ECS host, and run `sudo chown -R 92:92 /mnt/efs/ckan`. This only needs to be done once per EFS filesystem.
+SSH in to any ECS host (listed in opsworks), and run `sudo chown -R 92:92 /mnt/efs/ckan`. This only needs to be done once per EFS filesystem.
 
 ###### Required One-Time Non-Terraform Setup for Database
 The RDS (Relational Database Service) database needs to be initialized with a user and database. Terraform will generate an empty database. Log in to the database using a SQL tool (such as pgadmin) and run the SQL in `templates/rds-bootstrap.sh` to create the `datastore_ro` role and the `datastore` database. 
@@ -41,11 +50,3 @@ The RDS (Relational Database Service) database needs to be initialized with a us
 1. Ensure your IAM user has access to S3 bucket and DynamoDB table
 1. Run `terraform init`
 1. Your state and lock is now stored remotely
-
-###### Optional: Opsworks SSH Access
-(This is not required: Opsworks can manage public keys on instances)
-
-1. import some IAM users in Opsworks
-1. Add public SSH keys for users that will have SSH access
-1. grant access to the instances in Opsworks for the instances
-1. get ssh instructions from Opsworks console page
