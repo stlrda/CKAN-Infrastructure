@@ -12,7 +12,7 @@ quick reference on Mac with homebrew:
 ###### Setup and Use
 1. In console, move to `/infrastructure` directory
 1. Copy the  `terraform.tfvars.example` to `terraform.tfvars` and fill out with your choices.
-1. Run `terraform init` to initalize local terrform state
+1. Run `terraform init` to initialize local terraform state
 1. After any infrastructure changes, run `terraform apply`
 
 ###### Determine the Public Facing URL
