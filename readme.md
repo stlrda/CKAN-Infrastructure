@@ -21,10 +21,15 @@ quick reference on Mac with homebrew:
 1. Update the hosted_zone in your local `terraform.tfvars` 
 1. This will create a DNS record to generate a SSL Certificate for CKAN
 
-###### Required One-Time Non-Terraform Setup
-1. The mounted EFS must be owned by user/group id `92` - which is ckan in the container. Without this, the application inside the container cannot write to the mounted EFS volume on the host.
-SSH in to a host, and run `sudo chown -R 92:92 /mnt/efs/ckan`. This only needs to be done once per EFS filesystem.
-1. The RDS database needs to be initialized with a user and database. Log in to the database and run the SQL in `rds-bootstrap.sh` to create the `datastore_ro` role and the `datastore` database. 
+###### Required One-Time Non-Terraform Setup for EFS
+EFS (Elastic File System) is used to store files that are uploaded to CKAN and any site configuration changes. The directory is mounted on all ECS Cluster member hosts at `/mnt/efs/`. Hosts reading contents of the directory are pointed to a network volume shared among all hosts. 
+
+The mounted EFS directory must be owned by user/group id `92` - which is ckan in the container. Without this, the application inside the container cannot write to the mounted EFS volume on the host.
+
+SSH in to any ECS host, and run `sudo chown -R 92:92 /mnt/efs/ckan`. This only needs to be done once per EFS filesystem.
+
+###### Required One-Time Non-Terraform Setup for Database
+The RDS (Relational Database Service) database needs to be initialized with a user and database. Terraform will generate an empty database. Log in to the database using a SQL tool (such as pgadmin) and run the SQL in `templates/rds-bootstrap.sh` to create the `datastore_ro` role and the `datastore` database. 
 
 ###### Optional: Remote State
 (This is not needed, default will store state locally where terraform binary runs.)
