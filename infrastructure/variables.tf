@@ -22,4 +22,4 @@ variable "datastore_readonly_password" {
   default = "datastore_ro_password"
 }
 
-variable "admin_ip" {}
+variable "admin-cidr-blocks" {}

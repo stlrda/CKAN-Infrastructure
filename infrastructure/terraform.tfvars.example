@@ -9,4 +9,6 @@ vpc_availability_zones = [
 hosted_zone = "XXXXXXXXXXXXXX"
 rds_password = "4l318dbNgZ3Zjr^tIGmm@eWdddxrxOV%U3@e8Iqq4W3AG2&ZVVpr7H$Xrib$kha8"
 datastore_readonly_password = "datastore_ro_password"
-admin_ip = "1.2.3.4"
+admin-cidr-blocks = [
+    "1.2.3.4/32"
+  ]
