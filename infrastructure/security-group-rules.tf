@@ -87,7 +87,7 @@ resource "aws_security_group_rule" "all-from-admin-ip" {
   security_group_id = "${aws_security_group.administrative.id}"
   to_port = 0
   type = "ingress"
-  cidr_blocks = ["${var.admin_ip}/32"]
+  cidr_blocks = var.admin-cidr-blocks
 }
 
 //---- redis
