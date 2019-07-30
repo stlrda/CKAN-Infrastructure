@@ -22,12 +22,12 @@ module "ecs" {
 #----- ECS Services--------
 
 resource "aws_ecs_service" "ckan" {
-  name            = "ckan"
-  task_definition = "${aws_ecs_task_definition.ckan.id}"
-  cluster         = "${module.ecs.this_ecs_cluster_name}"
-  desired_count   = 1
+  name                               = "ckan"
+  task_definition                    = "${aws_ecs_task_definition.ckan.id}"
+  cluster                            = "${module.ecs.this_ecs_cluster_name}"
+  desired_count                      = 1
   deployment_minimum_healthy_percent = 0
-  deployment_maximum_percent = 200
+  deployment_maximum_percent         = 200
 
   load_balancer {
     target_group_arn = "${aws_alb_target_group.ckan-http.id}"
@@ -38,7 +38,7 @@ resource "aws_ecs_service" "ckan" {
   health_check_grace_period_seconds = 600
 
   network_configuration {
-    subnets         = module.vpc.private_subnets
+    subnets = module.vpc.private_subnets
     security_groups = [
       "${aws_security_group.ckan.id}",
       "${aws_security_group.all-outbound.id}"
@@ -79,7 +79,7 @@ resource "aws_ecs_service" "datapusher" {
   }
 
   network_configuration {
-    subnets         = module.vpc.private_subnets
+    subnets = module.vpc.private_subnets
     security_groups = [
       "${aws_security_group.datapusher.id}",
       "${aws_security_group.all-outbound.id}"
@@ -107,7 +107,7 @@ resource "aws_ecs_service" "solr" {
   }
 
   network_configuration {
-    subnets         = module.vpc.private_subnets
+    subnets = module.vpc.private_subnets
     security_groups = [
       "${aws_security_group.solr.id}",
       "${aws_security_group.all-outbound.id}"
@@ -138,16 +138,6 @@ resource "aws_ecs_task_definition" "ckan" {
 
 }
 
-resource "aws_ecs_task_definition" "datapusher" {
-  family                = "datapusher"
-  container_definitions = "${file("templates/task-definitions/datapusher.json")}"
-
-  network_mode = "awsvpc"
-
-  depends_on = [aws_cloudwatch_log_group.datapusher]
-
-}
-
 data "template_file" "container-definition-ckan" {
   template = file("${path.module}/templates/task-definitions/ckan.json")
 
@@ -162,15 +152,42 @@ data "template_file" "container-definition-ckan" {
     ELASTICACHE_ENDPOINT        = aws_elasticache_cluster.redis.cache_nodes.0.address
     SOLR_ENDPOINT               = "${aws_service_discovery_service.solr.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
     DATAPUSHER_ENDPOINT         = "${aws_service_discovery_service.datapusher.name}.${aws_service_discovery_private_dns_namespace.ckan-infrastructure.name}"
+    AWSLOGS_GROUP               = "${aws_cloudwatch_log_group.ckan.name}"
+    AWSLOGS_REGION              = "${var.region}"
+    AWSLOGS_STREAM_PREFIX       = "ecs"
   }
 
   depends_on = [aws_cloudwatch_log_group.ckan]
 
 }
 
+resource "aws_ecs_task_definition" "datapusher" {
+  family                = "datapusher"
+  container_definitions = data.template_file.container-definition-datapusher.rendered
+
+  network_mode = "awsvpc"
+
+  depends_on = [aws_cloudwatch_log_group.datapusher]
+
+}
+
+data "template_file" "container-definition-datapusher" {
+  template = file("${path.module}/templates/task-definitions/datapusher.json")
+
+  vars = {
+    AWSLOGS_GROUP         = aws_cloudwatch_log_group.datapusher.name
+    AWSLOGS_REGION        = var.region
+    AWSLOGS_STREAM_PREFIX       = "ecs"
+  }
+
+  depends_on = [aws_cloudwatch_log_group.datapusher]
+
+}
+
+
 resource "aws_ecs_task_definition" "solr" {
   family                = "solr"
-  container_definitions = "${file("templates/task-definitions/solr.json")}"
+  container_definitions = data.template_file.container-definition-solr.rendered
 
   volume {
     name      = "efs-solr"
@@ -178,6 +195,19 @@ resource "aws_ecs_task_definition" "solr" {
   }
 
   network_mode = "awsvpc"
+
+  depends_on = [aws_cloudwatch_log_group.solr]
+
+}
+
+data "template_file" "container-definition-solr" {
+  template = file("${path.module}/templates/task-definitions/solr.json")
+
+  vars = {
+    AWSLOGS_GROUP         = aws_cloudwatch_log_group.solr.name
+    AWSLOGS_REGION        = var.region
+    AWSLOGS_STREAM_PREFIX       = "ecs"
+  }
 
   depends_on = [aws_cloudwatch_log_group.solr]
 

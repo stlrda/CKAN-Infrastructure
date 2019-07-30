@@ -5,9 +5,9 @@
       "logDriver": "awslogs",
       "secretOptions": null,
       "options": {
-        "awslogs-group": "/ecs/ckan",
-        "awslogs-region": "us-east-1",
-        "awslogs-stream-prefix": "ecs"
+        "awslogs-group": "${AWSLOGS_GROUP}",
+        "awslogs-region": "${AWSLOGS_REGION}",
+        "awslogs-stream-prefix": "${AWSLOGS_STREAM_PREFIX}"
       }
     },
     "entryPoint": null,
