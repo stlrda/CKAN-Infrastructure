@@ -21,9 +21,15 @@ quick reference on Mac with homebrew:
 1. Update the hosted_zone in your local `terraform.tfvars` 
 1. This will create a DNS record to generate a SSL Certificate for CKAN
 
+###### Set your administrative IP list
+1. The list takes CIDR block ranges in the format of `a.b.c.d/z`. see: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
+1. if you want to add a single IP address, the suffix is `/32` i.e. `1.2.3.4/32`
+1. Add all wnated IPs in you `terraform.tfvars` file
+
 ###### One-Time Non-Terraform Setup for Opsworks SSH Access
 Opsworks manages public SSH keys on instances for access by your team. Instances in the autoscale group are added to opsworks.
 
+1. (note: you must connect from one of the administrative ips)
 1. Import IAM users you want to give access to in Opsworks (https://docs.aws.amazon.com/opsworks/latest/userguide/opsworks-security-users-manage-import.html)
 1. If you don't already have a public/private keypair set up, create one using this guide. Adding the SSH key to the agent is optional. https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key
 1. Copy and paste the contents of public SSH key (NOT the key.PEM file) to the opsworks user (https://docs.aws.amazon.com/opsworks/latest/userguide/security-settingsshkey.html)
