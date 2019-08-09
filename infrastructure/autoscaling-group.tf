@@ -8,11 +8,11 @@ resource "aws_placement_group" "ecs-spread-placement-group" {
 //@michael, please explain need for min_size=3 here
 resource "aws_autoscaling_group" "ecs" {
   name                      = local.name
-  max_size                  = 3
-  min_size                  = 3
+  max_size                  = 6
+  min_size                  = 6
   health_check_grace_period = 300
   health_check_type         = "EC2"
-  desired_capacity          = 3
+  desired_capacity          = 6
   force_delete              = true
   placement_group           = "${aws_placement_group.ecs-spread-placement-group.id}"
   vpc_zone_identifier       = module.vpc.public_subnets
