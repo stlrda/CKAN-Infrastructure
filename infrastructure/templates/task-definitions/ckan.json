@@ -108,13 +108,16 @@
       },
       {
         "name": "CKAN__PLUGINS",
-        "value": "image_view text_view recline_view pdf_view datastore datapusher pages envvars"
+        "value": "image_view text_view recline_view pdf_view datastore datapusher pages resource_proxy geo_view envvars"
       },
       {
         "name": "CKAN__VIEWS__DEFAULT_VIEWS",
         "value": "image_view text_view recline_view pdf_view"
       },
       {
+        "name": "CKANEXT_GEOVIEW__OL_VIEWER__FORMATS",
+        "value": "wms wfs geojson gml kml arcgis_rest"
+      },      {
         "name": "CKAN__HARVEST__MQ__TYPE",
         "value": "redis"
       },
@@ -148,7 +151,7 @@
     "memoryReservation": 128,
     "volumesFrom": [],
     "stopTimeout": null,
-    "image": "regionaldatalliance/ckan:version-2.8f",
+    "image": "regionaldatalliance/ckan:version-2.8g",
     "startTimeout": null,
     "dependsOn": null,
     "disableNetworking": null,
