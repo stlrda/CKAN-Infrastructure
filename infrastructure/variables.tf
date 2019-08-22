@@ -23,3 +23,10 @@ variable "datastore_readonly_password" {
 }
 
 variable "admin-cidr-blocks" {}
+
+variable "ckan_admin" {
+
+}
+variable "ckan_admin_password" {
+  description = ""
+}

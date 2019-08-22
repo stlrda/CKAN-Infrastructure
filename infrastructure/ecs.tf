@@ -155,6 +155,8 @@ data "template_file" "container-definition-ckan" {
     AWSLOGS_GROUP               = "${aws_cloudwatch_log_group.ckan.name}"
     AWSLOGS_REGION              = "${var.region}"
     AWSLOGS_STREAM_PREFIX       = "ecs"
+    CKAN_SYSADMIN_NAME          = "${var.ckan_admin}"
+    CKAN_SYSADMIN_PASSWORD      = "${var.ckan_admin_password}"
   }
 
   depends_on = [aws_cloudwatch_log_group.ckan]
