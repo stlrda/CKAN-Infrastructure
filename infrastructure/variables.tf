@@ -18,6 +18,8 @@ variable "hosted_zone" {}
 
 variable "rds_password" {}
 
+variable "rds_username" {}
+
 variable "datastore_readonly_password" {
   default = "datastore_ro_password"
 }

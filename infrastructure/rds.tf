@@ -4,7 +4,7 @@
 
 locals {
   engine_name = "postgres"
-  username = "ckan"
+  username = var.rds_username
   password = var.rds_password
 }
 
