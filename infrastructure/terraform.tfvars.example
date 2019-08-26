@@ -7,9 +7,11 @@ vpc_availability_zones = [
   "us-east-1c"
 ]
 hosted_zone = "XXXXXXXXXXXXXX"
-rds_password = "4l318dbNgZ3Zjr^tIGmm@eWdddxrxOV%U3@e8Iqq4W3AG2&ZVVpr7H$Xrib$kha8"
-datastore_readonly_password = "datastore_ro_password"
+rds_username = "admin"
+rds_password = "XXXXXXXXX"
 admin-cidr-blocks = [
     "1.2.3.4/32",
     "5.6.7.8/32"
   ]
+ckan_admin = "ckan_admin"
+ckan_admin_password = "XXXXXXX"
