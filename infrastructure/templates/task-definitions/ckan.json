@@ -151,7 +151,7 @@
     "memoryReservation": 128,
     "volumesFrom": [],
     "stopTimeout": null,
-    "image": "regionaldatalliance/ckan:version-2.8i",
+    "image": "regionaldatalliance/ckan:version-2.8j",
     "startTimeout": null,
     "dependsOn": null,
     "disableNetworking": null,
